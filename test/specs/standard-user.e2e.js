@@ -52,15 +52,30 @@ describe('My Correct Login', () => {
     });
 
     it('should add a product to the cart', async () => {
-        const addToCartBtn = await UserPage.invItems[0].$('#add-to-cart-sauce-labs-backpack');
+        const addToCartBtn = await UserPage.invItems[0].$('button');
         await addToCartBtn.click();
-        await expect(UserPage.invItems[0].$('button')).toHaveId('remove-sauce-labs-backpack');
+        expect(UserPage.invItems[0].$('button')).toHaveTextContaining('Remove');
     });
 
-    it('should remove a product to the cart', async () => {
-        const addToCartBtn = await UserPage.invItems[0].$('#remove-sauce-labs-backpack');
+    it('should remove a product of the cart', async () => {
+        const addToCartBtn = await UserPage.invItems[0].$('button');
         await addToCartBtn.click();
-        await expect(UserPage.invItems[0].$('button')).toHaveId('add-to-cart-sauce-labs-backpack');
+        expect(UserPage.invItems[0].$('button')).toHaveTextContaining('Add to cart');
+    });
+
+    it('should add a visited product to the cart', async () => {
+        const elemtTitle = await UserPage.invItems[0].$('.inventory_item_name');
+        await elemtTitle.click();
+        await InvElementPage.elemtImg.waitForDisplayed();
+        await InvElementPage.addToCart.click();
+        await expect(InvElementPage.removeOfCart).toBeDisplayed(); 
+        //expect(InvElementPage.addToCart.getText()).toEqual('Remove');
+    });
+
+    it('should remove a visited product of the cart', async () => {
+        await InvElementPage.removeOfCart.click();
+        await expect(InvElementPage.addToCart).toBeDisplayed();
+        //expect(InvElementPage.addToCart.getText()).toEqual('Add to cart');
     });
 });
 

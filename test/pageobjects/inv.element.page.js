@@ -8,7 +8,11 @@ class InvElementPage {
     }
 
     get addToCart() {
-        return $('#add-to-cart-sauce-labs-fleece-jacket');
+        return $('button=Add to cart');
+    }
+
+    get removeOfCart() {
+        return $('button=Remove');
     }
 }
 
