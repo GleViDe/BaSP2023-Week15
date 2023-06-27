@@ -43,13 +43,11 @@ describe('My Problem Login', () => {
         await elemtTitle.click();
         await InvElementPage.elemtImg.waitForDisplayed();
         await InvElementPage.addToCart.click();
-        await expect(InvElementPage.removeOfCart).toBeDisplayed(); 
-        //expect(InvElementPage.addToCart.getText()).toEqual('Remove');
+        await expect(InvElementPage.removeOfCart).toBeDisplayed();
     });
 
     it('should remove a visited product of the cart', async () => {
         await InvElementPage.removeOfCart.click();
         await expect(InvElementPage.addToCart).toBeDisplayed();
-        //expect(InvElementPage.addToCart.getText()).toEqual('Add to cart');
     });
 });

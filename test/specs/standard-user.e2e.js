@@ -1,6 +1,10 @@
 import LoginPage from '../pageobjects/login.page.js';
 import UserPage from '../pageobjects/user.page.js';
 import InvElementPage from '../pageobjects/inv.element.page.js';
+import CartPage from '../pageobjects/shopping.cart.page.js';
+import PurchaseInfoPage from '../pageobjects/purchase.info.page.js';
+import CheckoutPage from '../pageobjects/checkout.page.js';
+import PurchaseFinishPage from '../pageobjects/purchase.finish.page.js';
 
 describe('My Correct Login', () => {
     beforeAll('Visit Main Page', () => {
@@ -68,14 +72,71 @@ describe('My Correct Login', () => {
         await elemtTitle.click();
         await InvElementPage.elemtImg.waitForDisplayed();
         await InvElementPage.addToCart.click();
-        await expect(InvElementPage.removeOfCart).toBeDisplayed(); 
-        //expect(InvElementPage.addToCart.getText()).toEqual('Remove');
+        await expect(InvElementPage.removeOfCart).toBeDisplayed();
     });
 
     it('should remove a visited product of the cart', async () => {
         await InvElementPage.removeOfCart.click();
         await expect(InvElementPage.addToCart).toBeDisplayed();
-        //expect(InvElementPage.addToCart.getText()).toEqual('Add to cart');
+        await InvElementPage.backToProdBtn.click();
+    });
+
+    it('should let access to the product by the cart button and check the added items', async () => {
+        const addToCartBtn = await UserPage.invItems[0].$('button');
+        await addToCartBtn.click();
+        await UserPage.cartIcon.click();
+        const currentUrl = await browser.getUrl();
+        expect(currentUrl).toEqual('https://www.saucedemo.com/cart.html');
+        const cartLength = await CartPage.cartItems.length;
+        expect(cartLength).toBeGreaterThan(0);
+    });
+
+    it('checkout button should lead to the purchase information form', async () => {
+        await CartPage.checkout.click();
+        const currentUrl = await browser.getUrl();
+        expect(currentUrl).toEqual('https://www.saucedemo.com/checkout-step-one.html');
+    });
+
+    it('should show an error with empty purchase info', async () => {
+        await PurchaseInfoPage.continueBtn.click();
+        expect(PurchaseInfoPage.errorMsg).toHaveTextContaining('Error: First Name is required');
+    });
+
+    it('should show lastname required with empty lastname field in purchase info', async () => {
+        await PurchaseInfoPage.nameInput.setValue('Manu');
+        await PurchaseInfoPage.continueBtn.click();
+        expect(PurchaseInfoPage.errorMsg).toHaveTextContaining('Error: Postal Code is required');
+    });
+
+    it('should show postal code required with empty postal code field in purchase info', async () => {
+        await PurchaseInfoPage.lastNameInput.setValue('Cornet');
+        await PurchaseInfoPage.continueBtn.click();
+        expect(PurchaseInfoPage.errorMsg).toHaveTextContaining('Error: Last Name is required');
+    });
+
+    it('should show postal code required with empty postal code field in purchase info', async () => {
+        await PurchaseInfoPage.lastNameInput.setValue('Cornet');
+        await PurchaseInfoPage.continueBtn.click();
+        expect(PurchaseInfoPage.errorMsg).toHaveTextContaining('Error: Last Name is required');
+    });
+
+    it('continue button should lead to the checkoutpage after the form is fully filled', async () => {
+        await PurchaseInfoPage.postalCode.setValue('2000');
+        await PurchaseInfoPage.continueBtn.click();
+        const currentUrl = await browser.getUrl();
+        expect(currentUrl).toEqual('https://www.saucedemo.com/checkout-step-two.html');
+    });
+
+    it('finish button shoul lead to the end of the purchase process', async () => {
+        await CheckoutPage.finishBtn.click();
+        const currentUrl = await browser.getUrl();
+        expect(currentUrl).toEqual('https://www.saucedemo.com/checkout-complete.html');
+    });
+
+    it('back home button should lead to the main page', async () => {
+        await PurchaseFinishPage.backHome.click();
+        const currentUrl = await browser.getUrl();
+        expect(currentUrl).toEqual('https://www.saucedemo.com/inventory.html');
     });
 });
 

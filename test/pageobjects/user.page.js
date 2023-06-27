@@ -8,7 +8,7 @@ class UserPage {
     }
 
     get cartIcon() {
-        return $('#shopping_cart_container > a');
+        return $('#shopping_cart_container');
     }
 
     get prdTitle() {
