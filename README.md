@@ -13,6 +13,11 @@ You will find:
 - Jasmine
 - Allure
 
+## How to use this automatic test project
+- Download this repository to your local pc.
+- Open your Git Bash console, and open this project.
+- Then, in your Git Bash console, run the command `npm run wdio`
+- Once this test with WebdriverIO is finished, run the `npm run allure-report` command to obtain the Allure Report, where you will see the results of these tests more clearly.
 
 ## Authors
 
