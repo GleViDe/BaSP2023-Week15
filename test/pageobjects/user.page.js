@@ -35,6 +35,10 @@ class UserPage {
         return $('#react-burger-cross-btn');
     }
 
+    get logOut() {
+        return $('#logout_sidebar_link');
+    }
+
     get twitter() {
         return $('#page_wrapper > footer > ul > li.social_twitter > a');
     }

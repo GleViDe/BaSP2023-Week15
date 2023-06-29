@@ -149,6 +149,14 @@ describe('My Correct Login', () => {
         await UserPage.closeHambMenu.click();
         await expect(UserPage.hambMenu).toBeDisplayed();
     });
+
+    it('should log out', async () => {
+        await UserPage.hambMenu.click();
+        await UserPage.logOut.waitForDisplayed();
+        await UserPage.logOut.click();
+        const currentUrl = await browser.getUrl();
+        expect(currentUrl).toEqual('https://www.saucedemo.com/');
+    });
 });
 
 describe('My Incorrect Login', () => {
