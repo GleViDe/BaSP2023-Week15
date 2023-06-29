@@ -27,6 +27,14 @@ class UserPage {
         return $('#inventory_container > div').$$('.inventory_item');
     }
 
+    get hambButtons() {
+        return $('#menu_button_container > div > div.bm-menu-wrap > div.bm-menu > nav');
+    }
+
+    get closeHambMenu() {
+        return $('#react-burger-cross-btn');
+    }
+
     get twitter() {
         return $('#page_wrapper > footer > ul > li.social_twitter > a');
     }

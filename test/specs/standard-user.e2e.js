@@ -138,6 +138,17 @@ describe('My Correct Login', () => {
         const currentUrl = await browser.getUrl();
         expect(currentUrl).toEqual('https://www.saucedemo.com/inventory.html');
     });
+
+    it('should show the hamburguer menu', async () => {
+        await UserPage.hambMenu.click();
+        await expect(UserPage.closeHambMenu).toBeDisplayed();
+        await expect(UserPage.hambButtons).toBeDisplayed();
+    });
+
+    it('should close the hamburguer menu', async () => {
+        await UserPage.closeHambMenu.click();
+        await expect(UserPage.hambMenu).toBeDisplayed();
+    });
 });
 
 describe('My Incorrect Login', () => {
