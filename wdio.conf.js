@@ -23,11 +23,10 @@ export const config = {
     // will be called from there.
     //
     specs: [
-        './test/pageobjects/*.js',
+        './test/specs/performance-user.e2e.js',
         './test/specs/standard-user.e2e.js',
         './test/specs/locked-out-user.e2e.js',
-        './test/specs/problem-user.e2e.js',
-        './test/specs/performance-user.e2e.js'
+        './test/specs/problem-user.e2e.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -260,7 +259,7 @@ export const config = {
         })
     },
     afterTest: async function(test, context, { error, result, duration, passed, retries }) {
-        if (!error) {
+        if (error) {
             await browser.takeScreenshot();
         }
     },
